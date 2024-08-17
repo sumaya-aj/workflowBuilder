@@ -5,7 +5,7 @@
       <form class="row g-3">
         <div class="col-12">
           <label for="zipcode" class="form-label">Enter a zipcode</label>
-          <input type="text" class="form-control" id="zipcode">
+          <input type="text" class="form-control" id="zipcode" required>
         </div>
         <div class="col-12">
           <button type="submit" class="btn btn-primary">Add Location</button>
@@ -13,4 +13,9 @@
       </form>
     </div>
   </div>
+  <app-weather-card
+    *ngFor="let card of weatherCards; let i = index"
+    [weatherData]="card"
+    (remove)="removeCard(i)">
+  </app-weather-card>
 </div>
