@@ -2,10 +2,10 @@
   <div class="card">
     <div class="card-header">Add a Location</div>
     <div class="card-body">
-      <form class="row g-3">
+      <form class="row g-3" (ngSubmit)="onSubmit()" >
         <div class="col-12">
           <label for="zipcode" class="form-label">Enter a zipcode</label>
-          <input type="text" class="form-control" id="zipcode" required>
+          <input type="text" class="form-control" [(ngModel)]="zipcode" id="zipcode" name ="zipcode" required>
         </div>
         <div class="col-12">
           <button type="submit" class="btn btn-primary">Add Location</button>
@@ -13,9 +13,10 @@
       </form>
     </div>
   </div>
-  <app-weather-card
-    *ngFor="let card of weatherCards; let i = index"
-    [weatherData]="card"
-    (remove)="removeCard(i)">
+  <ng-container *ngFor="let weatherCard of weatherCards; let i = index">
+    <app-weather-card
+      [weatherData]="weatherCard"
+      (remove)="removeCard(i)">
   </app-weather-card>
+  </ng-container>
 </div>
