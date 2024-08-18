@@ -4,6 +4,7 @@ import { WeatherCardComponent } from './Components/weather-card/weather-card.com
 import { WeatherService } from './Services/weather.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { WeatherData } from './interfaces/weather.interface';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class AppComponent {
   title = 'Practice Project Angular Level 2';
-  weatherCards: any[] = [];
+  weatherCards: WeatherData[] = [];
   zipcode = '';
 
   constructor(private weatherService: WeatherService) {

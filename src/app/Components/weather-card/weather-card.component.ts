@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { WeatherData } from '../../interfaces/weather.interface';
 
 @Component({
   selector: 'app-weather-card',
@@ -8,7 +9,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrl: './weather-card.component.css'
 })
 export class WeatherCardComponent {
-  @Input() weatherData: any;
+  @Input() weatherData!: WeatherData;
   @Output() remove = new EventEmitter<void>();
   
   onRemove() {
