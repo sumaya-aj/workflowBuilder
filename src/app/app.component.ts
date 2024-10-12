@@ -1,43 +1,70 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { WeatherCardComponent } from './Components/weather-card/weather-card.component';
-import { WeatherService } from './Services/weather.service';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { WeatherData } from './interfaces/weather.interface';
+import { CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+
+interface Item {
+  id: number;
+  type: 'action' | 'trigger';
+  positionX: number;  // X position in the canvas
+  positionY: number;  // Y position in the canvas
+  name: string; // Name of the action or trigger
+}
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, WeatherCardComponent, CommonModule, FormsModule],
+  imports: [RouterOutlet, CommonModule, DragDropModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'Practice Project Angular Level 2';
-  weatherCards: WeatherData[] = [];
-  zipcode = '';
+  predefinedList: Item[] = [
+    { id: 1, type: 'action', positionX: 0, positionY: 0, name: 'Send Email' },
+    { id: 2, type: 'trigger', positionX: 0, positionY: 0, name: 'Delay' },
+    { id: 3, type: 'trigger', positionX: 0, positionY: 0, name: 'When Email is Opened' },
+  ];
+  canvasDroppedItems: Item[] = [];
 
-  constructor(private weatherService: WeatherService) {
-  }
+  drop(event: CdkDragDrop<Item[]>) {
+    if (event.previousContainer === event.container) {
+      // Reorder items within the same list
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      this.updatePositions(event.container.data);
+    } else {
+      // Move items between lists
+      const item = event.previousContainer.data[event.previousIndex];
+      const newItem: Item = { 
+        ...item, 
+        positionX: event.currentIndex * 100, // Assuming each item has a width of 100px
+        positionY: this.canvasDroppedItems.length * 100 // Assuming each item has a height of 100px
+      };
 
-
-  onSubmit() {
-    if (this.zipcode) {
-      this.weatherService.getWeather(this.zipcode).subscribe(
-        (data) => {
-          // Assuming `data` is the weather information you need
-          this.weatherCards.push(data);
-          this.zipcode = ''; // Clear the input after submission
-        },
-        (error) => {
-          console.error('Error fetching weather data', error);
-        }
+      // Move item to the new container
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
       );
+      
+      // Update the position of the moved item
+      this.canvasDroppedItems[event.currentIndex] = newItem;
+
+      // Update the positions of other items
+      this.updatePositions(event.container.data);
     }
   }
 
-  removeCard(index: number) {
-    this.weatherCards.splice(index, 1);
+  updatePositions(items: Item[]) {
+    items.forEach((item, index) => {
+      item.positionX = index * 100; // Update X position based on index
+      item.positionY = Math.floor(index / 3) * 100; // Example logic for Y position
+    });
+  }
+
+  saveCanvas() {
+    const jsonData = JSON.stringify(this.canvasDroppedItems, null, 2); // Pretty print the JSON
+    console.log(jsonData);
   }
 }

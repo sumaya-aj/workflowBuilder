@@ -1,22 +1,13 @@
-<div class="container mt-4">
-  <div class="card">
-    <div class="card-header">Add a Location</div>
-    <div class="card-body">
-      <form class="row g-3" (ngSubmit)="onSubmit()" >
-        <div class="col-12">
-          <label for="zipcode" class="form-label">Enter a zipcode</label>
-          <input type="text" class="form-control" [(ngModel)]="zipcode" id="zipcode" name ="zipcode" required>
-        </div>
-        <div class="col-12">
-          <button type="submit" class="btn btn-primary">Add Location</button>
-        </div>
-      </form>
-    </div>
-  </div>
-  <ng-container *ngFor="let weatherCard of weatherCards; let i = index">
-    <app-weather-card
-      [weatherData]="weatherCard"
-      (remove)="removeCard(i)">
-  </app-weather-card>
-  </ng-container>
+<h3>Predefined List of Actions and Triggers</h3>
+<div class="container" cdkDropList id="predefinedList" [cdkDropListConnectedTo]="['canvasDroppedItems']" [cdkDropListData]="predefinedList" (cdkDropListDropped)="drop($event)">
+  <div class="item" cdkDrag *ngFor="let item of predefinedList">{{item.name}}</div>
+</div>
+
+<h3>Canvas</h3>
+<div class="container" cdkDropList id="canvasDroppedItems" [cdkDropListConnectedTo]="['predefinedList']" [cdkDropListData]="canvasDroppedItems" (cdkDropListDropped)="drop($event)">
+  <div class="item" cdkDrag *ngFor="let item of canvasDroppedItems">{{item.name}}</div>
+</div>
+
+<div class="save-button-container">
+  <button (click)="saveCanvas()">Save</button>
 </div>

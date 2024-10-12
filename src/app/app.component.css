@@ -1,0 +1,46 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; 
+    border: 1px dashed #ccc;
+    min-height: 100px;
+    padding: 10px; 
+  }
+  
+  .container .item {
+    width: 100%; 
+    background-color: #6495ED; 
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: move;
+    padding: 1em;
+    transition: transform 0.2s ease-in-out; 
+  }
+  
+  .container .item.cdk-drag-preview {
+    opacity: 0.8;
+    background-color: #FFA500; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  }
+  
+  .save-button-container {
+    display: flex;             
+    justify-content: center;     
+    margin-top: 20px;          
+  }
+  
+  .save-button-container button {
+    padding: 10px 20px;         
+    background-color: #4CAF50;  
+    color: white;                
+    border: none;                 
+    border-radius: 5px;         
+    cursor: pointer;              
+    font-size: 16px;              
+  }
+  
+  .save-button-container button:hover {
+    background-color: #45a049;   
+  }

@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "practiceNgLevel2": {
+    "workflowBuilder": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -59,10 +59,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "practiceNgLevel2:build:production"
+              "buildTarget": "workflowBuilder:build:production"
             },
             "development": {
-              "buildTarget": "practiceNgLevel2:build:development"
+              "buildTarget": "workflowBuilder:build:development"
             }
           },
           "defaultConfiguration": "development"
